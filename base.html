@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Employee Management System{% endblock %}</title>
+    <style>
+        /* Basic Styling */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background-color: #f4f4f4; }
+        .container { max-width: 1000px; margin: 40px auto; background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); min-height: 500px; }
+        h1, h2 { color: #333; }
+        
+        /* Table Styling */
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #e9ecef; color: #333; font-weight: 600; }
+        
+        /* THE ALIGNMENT FIX IS HERE (Added vertical-align: middle;) */
+        td {
+            vertical-align: middle; 
+        }
+        
+        /* Button/Link Styling */
+        .btn {
+            padding: 8px 12px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 14px;
+            margin-right: 5px;
+            transition: background-color 0.3s;
+            display: inline-block;
+            border: 1px solid transparent;
+            cursor: pointer;
+            color: white !important; /* Force white text on buttons */
+        }
+        .btn-primary { background-color: #4CAF50; }
+        .btn-edit { background-color: #007bff; }
+        .btn-delete { background-color: #dc3545; }
+
+        /* Form Styling */
+        form label { display: block; margin-bottom: 5px; font-weight: bold; }
+        form input[type="text"], form input[type="email"], form input[type="password"] {
+            width: 100%; padding: 10px; margin-bottom: 15px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px;
+        }
+        form button[type="submit"] {
+            padding: 10px 15px; color: white; border: none; cursor: pointer; border-radius: 4px; background-color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+    <nav style="background-color: #343a40; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+        <div style="font-size: 1.5rem; font-weight: bold;">
+            <a href="{{ url_for('index') }}" style="color: white; text-decoration: none;">EMS Dashboard</a>
+        </div>
+        
+        <div style="display: flex; align-items: center;">
+            {% if current_user.is_authenticated %}
+                <span style="color: #ccc; margin-right: 15px; font-size: 1rem;">
+                    Logged in as: {{ current_user.username }}
+                </span>
+                <a href="{{ url_for('logout') }}" class="btn btn-delete">Logout</a>
+            {% else %}
+                <a href="{{ url_for('login') }}" class="btn btn-edit">Login</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <div class="container">
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div style="padding: 10px; margin-bottom: 15px; border-radius: 4px; color: white; 
+                          background-color: {% if category == 'success' %}#28a745{% elif category == 'danger' %}#dc3545{% else %}#007bff{% endif %};">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+
+    </div>
+
+    <footer style="text-align: center; padding: 15px 0; margin-top: 50px; border-top: 1px solid #ddd; background-color: #f8f9fa;">
+        <p style="margin: 0; color: #6c757d; font-size: 0.9rem;">
+            &copy; 2025 Employee Management System. All rights reserved.
+        </p>
+        <p style="margin: 5px 0 0 0; color: #3bf308; font-size: 0.8rem; font-weight: bold;">
+            Developed by Nandana Vijesh
+        </p>
+    </footer>
+</body>
+</html>

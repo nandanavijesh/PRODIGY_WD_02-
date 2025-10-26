@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+{% block header_title %}Login{% endblock %}
+
+{% block content %}
+    <h2 style="text-align: center; margin-top: 50px;">Administrator Login</h2>
+    
+    <div style="max-width: 400px; margin: 30px auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+        <form method="POST" action="{{ url_for('login') }}">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            
+            <button type="submit" style="width: 100%; margin-top: 10px;">Log In</button>
+        </form>
+    </div>
+    
+    <p style="text-align: center; color: #555; margin-top: 20px;">
+        **Default Credentials:** Username: `admin` / Password: `password123`
+    </p>
+
+{% endblock %}
